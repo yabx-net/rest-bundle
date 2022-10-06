@@ -1,0 +1,9 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+    Yabx\RestBundle\EventSubscriber\ControllerArgumentsSubscriber: ~
+    Yabx\RestBundle\EventSubscriber\ExceptionSubscriber: ~
+    Yabx\RestBundle\EventSubscriber\RequestSubscriber: ~
+    Yabx\RestBundle\EventSubscriber\ResponseSubscriber: ~
+    Yabx\RestBundle\Service\ObjectBuilder: ~

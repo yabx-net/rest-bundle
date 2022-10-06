@@ -1,0 +1,28 @@
+{
+	"name": "yabx-net/rest-bundle.git",
+	"version": "0.0.1",
+	"type": "symfony-bundle",
+	"minimum-stability": "stable",
+	"description": "REST for Symfony 6",
+	"license": "MIT",
+	"require": {
+		"php": "^8.1",
+		"sensio/framework-extra-bundle": "^6.0",
+		"symfony/validator": "^6.0",
+		"symfony/serializer": "^6.0"
+	},
+	"config": {
+		"sort-packages": true
+	},
+	"autoload": {
+		"psr-4": {
+			"Yabx\\RestBundle\\": "src/"
+		}
+	},
+	"extra": {
+		"symfony": {
+			"allow-contrib": false,
+			"require": "6.*.*"
+		}
+	}
+}
