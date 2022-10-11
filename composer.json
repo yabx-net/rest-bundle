@@ -1,6 +1,6 @@
 {
-	"name": "yabx-net/rest-bundle",
-	"version": "0.0.2",
+	"name": "yabx/rest-bundle",
+	"version": "0.1.0",
 	"type": "symfony-bundle",
 	"minimum-stability": "stable",
 	"description": "REST for Symfony 6",
