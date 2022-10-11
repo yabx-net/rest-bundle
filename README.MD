@@ -1,5 +1,5 @@
 Install
 -------
 ```bash
-composer require yabx-net/rest-bundle
+composer require yabx/rest-bundle
 ```
