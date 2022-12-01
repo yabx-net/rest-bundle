@@ -2,12 +2,10 @@
 
 namespace Yabx\RestBundle\Service;
 
-use DateTime;
 use Exception;
 use Throwable;
 use ReflectionClass;
 use RuntimeException;
-use DateTimeInterface;
 use ReflectionProperty;
 use ReflectionNamedType;
 use ReflectionUnionType;
@@ -51,6 +49,7 @@ class ObjectBuilder {
 
 			$key = $rp->getName();
 			$isSet = true;
+
 			if(key_exists($key, $data)) {
 				$value = $data[$key];
 			} elseif(key_exists($key, $defaults)) {
@@ -59,15 +58,24 @@ class ObjectBuilder {
 				$value = null;
 				$isSet = false;
 			}
-			if($type->getName() !== gettype($value)) {
+
+            $typeName = $type->getName();
+
+			if($typeName !== gettype($value)) {
 				if($type->isBuiltin()) {
-					$value = $this->cast($value, $type->getName());
+					$value = $this->cast($value, $typeName);
 				} elseif(is_array($value)) {
-					$value = $this->build($type->getName(), $value);
-				} elseif(class_exists($type->getName()) && $value !== null) {
-                    $rc1 = new ReflectionClass($type->getName());
+					$value = $this->build($typeName, $value);
+				} elseif(class_exists($typeName) && $value !== null) {
+                    $rc1 = new ReflectionClass($typeName);
                     if($rc1->isEnum()) {
-                        $value = is_scalar($value) ? $type->getName()::from($value) : $value;
+                        $value = is_scalar($value) ? call_user_func([$typeName, 'tryFrom'], $value) : $value;
+                    } else {
+                        if($rc1->hasMethod('buildFrom')) {
+                            $value = call_user_func([$typeName, 'buildFrom'], $value);
+                        } else {
+                            $value = new $typeName($value);
+                        }
                     }
                 }
 			}
@@ -133,7 +141,7 @@ class ObjectBuilder {
 		return $object;
 	}
 
-	protected function cast($value, string $type): float|DateTime|null|int|bool|array|string {
+	protected function cast($value, string $type): float|null|int|bool|array|string {
 		if($value === null) {
 			return null;
 		} elseif($type === 'bool' || $type === 'boolean') {
@@ -146,14 +154,8 @@ class ObjectBuilder {
 			return (string)$value;
 		} elseif($type === 'array') {
 			return (array)$value;
-		} elseif($type === DateTimeInterface::class) {
-			return new DateTime($value);
 		} elseif($type === 'mixed') {
-			if(is_numeric($value)) return (float)$value;
-			elseif(is_array($value) && $value['id']) {
-				if(is_numeric($value['id'])) return (int)$value['id'];
-				else return (string)$value['id'];
-			} else return $value;
+			return $value;
 		} else {
 			throw new Exception('Failed to convert. Unexpected format: ' . $type);
 		}
