@@ -7,3 +7,5 @@ services:
     Yabx\RestBundle\EventSubscriber\RequestSubscriber: ~
     Yabx\RestBundle\EventSubscriber\ResponseSubscriber: ~
     Yabx\RestBundle\Service\ObjectBuilder: ~
+    Yabx\RestBundle\Service\FieldsGroups: ~
+

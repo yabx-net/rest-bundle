@@ -6,6 +6,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Yabx\RestBundle\Service\FieldsGroups;
 
 class RequestSubscriber implements EventSubscriberInterface {
 
@@ -40,6 +41,9 @@ class RequestSubscriber implements EventSubscriberInterface {
 			});
 			$request->request->replace($data);
 		}
+
+        FieldsGroups::getInstance()->initGroups($request->get('__groups') ?? []);
+
 	}
 
 	public static function getSubscribedEvents(): array {

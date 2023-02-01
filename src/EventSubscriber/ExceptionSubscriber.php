@@ -33,8 +33,8 @@ class ExceptionSubscriber implements EventSubscriberInterface {
 
 		$message = $throwable->getMessage();
 
-		if(preg_match('/^.+\\\([A-z]+) object not found by the @ParamConverter annotation.$/', $message, $m)) {
-			$message = "{$m[1]} not found";
+		if(preg_match('/^.+\\\([A-z]+).+ object not found/', $message, $m)) {
+			$message = "{$m[1]} object not found";
 		} elseif(preg_match('/Access Denied/i', $message)) {
 			$message = 'Access Denied';
 		}
