@@ -11,8 +11,9 @@ use Yabx\RestBundle\Service\FieldsGroups;
 class RequestSubscriber implements EventSubscriberInterface {
 
 	public function onRequestEvent(RequestEvent $event) {
+
 		$request = $event->getRequest();
-		//$request->setLocale('en');
+
         $requestMethod = $request->getMethod();
         $contentType = $request->headers->get('content-type');
 
@@ -25,8 +26,12 @@ class RequestSubscriber implements EventSubscriberInterface {
 
 		} elseif($body = $request->getContent() ?: $request->query->get('__payload')) {
             $data = json_decode($body, true);
+            if(json_last_error()) {
+                $event->setResponse(new JsonResponse(['error' => json_last_error_msg(), 'code' => -1], 400));
+                return;
+            }
             if(!is_array($data)) {
-				$event->setResponse(new JsonResponse(['error' => 'Malformed JSON'], 400));
+				$event->setResponse(new JsonResponse(['error' => 'Malformed JSON', 'code' => -2], 400));
 				return;
 			}
 
@@ -40,10 +45,8 @@ class RequestSubscriber implements EventSubscriberInterface {
 				if(is_string($value)) $value = trim($value);
 			});
 			$request->request->replace($data);
+            FieldsGroups::getInstance()->initGroups($data['fields'] ?? []);
 		}
-
-        FieldsGroups::getInstance()->initGroups($request->get('__groups') ?? []);
-
 	}
 
 	public static function getSubscribedEvents(): array {
