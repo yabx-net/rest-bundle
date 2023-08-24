@@ -16,6 +16,7 @@ use Yabx\RestBundle\Attributes\Validator;
 use Yabx\RestBundle\Attributes\Processor;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Yabx\RestBundle\Exception\ValidationException;
 
 class ObjectBuilder {
 
@@ -33,8 +34,8 @@ class ObjectBuilder {
 	 * @param array $data
 	 * @param callable|null $resolve
 	 * @return T
-	 * @throws ReflectionException
-	 */
+	 * @throws ReflectionException|ValidationException
+     */
 	public function build(string $className, array $data = [], callable $resolve = null): object {
 		$rc = new ReflectionClass($className);
 		$object = $rc->newInstanceWithoutConstructor();
@@ -97,8 +98,8 @@ class ObjectBuilder {
 						if(is_string($processor)) $processor = [$object, $processor];
 						$value = call_user_func($processor, $value);
 					} catch(Throwable $err) {
-						throw new Exception($name . ': ' . $err->getMessage());
-					}
+                        throw new ValidationException($key, $name, $err->getMessage());
+                    }
 				}
 			}
 
@@ -111,8 +112,8 @@ class ObjectBuilder {
 						if(is_string($validator)) $validator = [$object, $validator];
 						call_user_func($validator, $value);
 					} catch(Throwable $err) {
-						throw new Exception($name . ': ' . $err->getMessage());
-					}
+                        throw new ValidationException($key, $name, $err->getMessage());
+                    }
 				}
 			}
 
@@ -129,7 +130,7 @@ class ObjectBuilder {
 			$err = $this->validator->validate($value, $asserts);
 			if($err->count()) {
 				$err = $err->get(0);
-				throw new Exception($name . ': ' . $err->getMessage());
+				throw new ValidationException($key, $name, $err->getMessage());
 			}
 
 			if($resolve) {

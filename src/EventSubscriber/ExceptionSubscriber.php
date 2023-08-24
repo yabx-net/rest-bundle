@@ -10,6 +10,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Error;
+use Yabx\RestBundle\Exception\ValidationException;
 
 class ExceptionSubscriber implements EventSubscriberInterface {
 
@@ -19,7 +20,7 @@ class ExceptionSubscriber implements EventSubscriberInterface {
         $this->isDev = $kernel->getEnvironment() === 'dev';
 	}
 
-	public function onKernelException(ExceptionEvent $event) {
+	public function onKernelException(ExceptionEvent $event): void {
 
 		$throwable = $event->getThrowable();
 
@@ -36,13 +37,22 @@ class ExceptionSubscriber implements EventSubscriberInterface {
 		if(preg_match('/^.+\\\([A-z]+).+ object not found/', $message, $m)) {
 			$message = "{$m[1]} object not found";
 		} elseif(preg_match('/Access Denied/i', $message)) {
-			$message = 'Access Denied';
-		}
+            $message = 'Access Denied';
+            $code = 403;
+        }
 
 		$res = [
 			'error' => $message,
 			'code' => $code,
 		];
+
+        if($throwable instanceof ValidationException) {
+            $res['validation'] = [
+                'key' => $throwable->getKey(),
+                'name' => $throwable->getName(),
+                'error' => $throwable->getError(),
+            ];
+        }
 
 		if($this->isDev) {
 			$res['trace'] = $throwable->getTrace();
