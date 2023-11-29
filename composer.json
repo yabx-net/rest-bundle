@@ -1,6 +1,5 @@
 {
 	"name": "yabx/rest-bundle",
-	"version": "0.4.0",
 	"type": "symfony-bundle",
 	"minimum-stability": "RC",
 	"description": "REST for Symfony 6.4",
