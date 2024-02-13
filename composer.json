@@ -6,7 +6,7 @@
 	"license": "MIT",
 	"require": {
 		"php": "^8.3",
-		"doctrine/orm": "^2.15",
+		"doctrine/orm": "^3",
 		"symfony/framework-bundle": "^6.4|^7.0",
 		"symfony/http-kernel": "^6.4|^7.0",
 		"symfony/serializer": "^6.4|^7.0",

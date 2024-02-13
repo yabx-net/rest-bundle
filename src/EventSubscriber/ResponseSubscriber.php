@@ -7,7 +7,7 @@ use Symfony\Component\HttpKernel\Event\ResponseEvent;
 
 class ResponseSubscriber implements EventSubscriberInterface {
 
-	public function onResponseEvent(ResponseEvent $event) {
+	public function onResponseEvent(ResponseEvent $event): void {
 		$headers = $event->getResponse()->headers;
 		$headers->set('Access-Control-Allow-Origin', '*');
 		if($event->getRequest()->getMethod() === 'OPTIONS') {

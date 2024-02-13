@@ -10,7 +10,7 @@ use Yabx\RestBundle\Service\FieldsGroups;
 
 class RequestSubscriber implements EventSubscriberInterface {
 
-	public function onRequestEvent(RequestEvent $event) {
+	public function onRequestEvent(RequestEvent $event): void {
 
 		$request = $event->getRequest();
 

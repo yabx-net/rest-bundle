@@ -16,7 +16,7 @@ class ControllerArgumentsSubscriber implements EventSubscriberInterface {
 		$this->builder = $builder;
 	}
 
-	public function onControllerArgumentsEvent(ControllerArgumentsEvent $event) {
+	public function onControllerArgumentsEvent(ControllerArgumentsEvent $event): void {
 		$args = $event->getArguments();
 		$request = $event->getRequest();
 		foreach($args as $idx => $arg) {

@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 class EnumChoiceValidator extends ConstraintValidator {
 
-    public function validate(mixed $value, Constraint $constraint) {
+    public function validate(mixed $value, Constraint $constraint): void {
 
         if(!$constraint instanceof EnumChoice) {
             throw new UnexpectedTypeException($constraint, EnumChoice::class);
@@ -32,7 +32,7 @@ class EnumChoiceValidator extends ConstraintValidator {
 
     }
 
-    private function validateItem(mixed $value, EnumChoice $constraint, array $cases) {
+    private function validateItem(mixed $value, EnumChoice $constraint, array $cases): void {
         if(!is_scalar($value)) $value = $value->value;
         if(!in_array($value, $cases)) {
             $this->context->buildViolation($constraint->message)
