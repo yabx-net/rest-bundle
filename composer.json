@@ -1,16 +1,16 @@
 {
 	"name": "yabx/rest-bundle",
 	"type": "symfony-bundle",
-	"minimum-stability": "RC",
-	"description": "REST for Symfony 6.4",
+	"minimum-stability": "stable",
+	"description": "REST for Symfony 7.0",
 	"license": "MIT",
 	"require": {
 		"php": "^8.3",
 		"doctrine/orm": "^2.15",
-		"symfony/framework-bundle": "^6.4",
-		"symfony/http-kernel": "^6.4",
-		"symfony/serializer": "^6.4",
-		"symfony/validator": "^6.4"
+		"symfony/framework-bundle": "^6.4|^7.0",
+		"symfony/http-kernel": "^6.4|^7.0",
+		"symfony/serializer": "^6.4|^7.0",
+		"symfony/validator": "^6.4|^7.0"
 	},
 	"config": {
 		"sort-packages": true
@@ -23,7 +23,7 @@
 	"extra": {
 		"symfony": {
 			"allow-contrib": false,
-			"require": "6.*.*"
+			"require": "6.*.*|7.*.*"
 		}
 	}
 }
