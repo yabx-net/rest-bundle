@@ -36,9 +36,11 @@ class ExceptionSubscriber implements EventSubscriberInterface {
 
 		if(preg_match('/^.+\\\([A-z]+).+ object not found/', $message, $m)) {
 			$message = "{$m[1]} object not found";
-		} elseif(preg_match('/Access Denied/i', $message)) {
+		} elseif(preg_match('/access denied/i', $message)) {
             $message = 'Access Denied';
             $code = 403;
+        } elseif (str_contains($message, 'authentication')) {
+            $code = 401;
         }
 
 		$res = [
