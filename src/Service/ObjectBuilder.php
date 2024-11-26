@@ -36,7 +36,7 @@ class ObjectBuilder {
 	 * @return T
 	 * @throws ReflectionException|ValidationException
      */
-	public function build(string $className, array $data = [], callable $resolve = null): object {
+	public function build(string $className, array $data = [], ?callable $resolve = null): object {
 		$rc = new ReflectionClass($className);
 		$object = $rc->newInstanceWithoutConstructor();
 		$defaults = $rc->getDefaultProperties();
@@ -162,7 +162,7 @@ class ObjectBuilder {
 		}
 	}
 
-	public function fillObject(object $object, object $source, callable $resolver = null): void {
+	public function fillObject(object $object, object $source, ?callable $resolver = null): void {
 		foreach(get_object_vars($source) as $key => $value) {
 			if($resolver) [$key, $value] = call_user_func($resolver, $key, $value, $this);
 			$setter = "set{$key}";
