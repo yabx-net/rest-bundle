@@ -169,7 +169,11 @@ class ObjectBuilder {
 			if(method_exists($object, $setter)) {
 				call_user_func([$object, $setter], $value);
 			} elseif(property_exists($object, $key)) {
-				$object->$key = $value;
+                try {
+                    $object->$key = $value;
+                } catch(Throwable $err) {
+                    // Silence is gold
+                }
 			}
 		}
 	}
