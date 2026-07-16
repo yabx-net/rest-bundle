@@ -1,13 +1,12 @@
 {
 	"name": "yabx/rest-bundle",
-	"version": "1.0.0",
 	"type": "symfony-bundle",
 	"minimum-stability": "stable",
 	"description": "REST for Symfony 8",
 	"license": "MIT",
 	"require": {
 		"php": "^8.5",
-		"doctrine/orm": "^3",
+		"doctrine/orm": "^3|^4",
 		"symfony/event-dispatcher": "^8.1",
 		"symfony/framework-bundle": "^8.1",
 		"symfony/http-foundation": "^8.1",
