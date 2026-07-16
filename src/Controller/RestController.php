@@ -9,7 +9,7 @@ use Yabx\RestBundle\Service\FieldsGroups;
 
 class RestController extends AbstractController {
 
-    public function result($data, int $httpCode = Response::HTTP_OK, array $groups = []): JsonResponse {
+    public function result(mixed $data, int $httpCode = Response::HTTP_OK, array $groups = []): JsonResponse {
         $fg = FieldsGroups::getInstance();
 		$fg->mergeGroups($groups);
 		return $this->json(['result' => $data], $httpCode, [], ['groups' => $fg->getGroups()]);

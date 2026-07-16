@@ -21,7 +21,7 @@ class RequestSubscriber implements EventSubscriberInterface {
             $response = new Response(null);
             $event->setResponse($response);
 
-        } elseif($requestMethod !== 'GET' && ($contentType === 'application/x-www-form-urlencoded' || str_starts_with($contentType, 'multipart/form-data'))) {
+        } elseif($requestMethod !== 'GET' && ($contentType === 'application/x-www-form-urlencoded' || ($contentType && str_starts_with($contentType, 'multipart/form-data')))) {
             $data = $request->request->all();
 
 		} elseif($body = $request->getContent() ?: $request->query->get('__payload')) {

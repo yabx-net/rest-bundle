@@ -1,16 +1,20 @@
 {
 	"name": "yabx/rest-bundle",
+	"version": "1.0.0",
 	"type": "symfony-bundle",
 	"minimum-stability": "stable",
-	"description": "REST for Symfony 7.0",
+	"description": "REST for Symfony 8",
 	"license": "MIT",
 	"require": {
-		"php": "^8.3",
+		"php": "^8.5",
 		"doctrine/orm": "^3",
-		"symfony/framework-bundle": "^6.4|^7.0",
-		"symfony/http-kernel": "^6.4|^7.0",
-		"symfony/serializer": "^6.4|^7.0",
-		"symfony/validator": "^6.4|^7.0"
+		"symfony/event-dispatcher": "^8.1",
+		"symfony/framework-bundle": "^8.1",
+		"symfony/http-foundation": "^8.1",
+		"symfony/http-kernel": "^8.1",
+		"symfony/serializer": "^8.1",
+		"symfony/translation-contracts": "^3.5",
+		"symfony/validator": "^8.1"
 	},
 	"config": {
 		"sort-packages": true
@@ -23,7 +27,7 @@
 	"extra": {
 		"symfony": {
 			"allow-contrib": false,
-			"require": "6.*.*|7.*.*"
+			"require": "8.1.*"
 		}
 	}
 }

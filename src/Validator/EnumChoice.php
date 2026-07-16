@@ -10,9 +10,11 @@ class EnumChoice extends Constraint {
 
     public function __construct(
         public string $enum,
-        public string $message = 'Invalid value: {{ value }}. Allowed: {{ options }}'
+        public string $message = 'Invalid value: {{ value }}. Allowed: {{ options }}',
+        ?array $groups = null,
+        mixed $payload = null,
     ) {
-        parent::__construct();
+        parent::__construct(null, $groups, $payload);
     }
 
     public function validatedBy(): string {
